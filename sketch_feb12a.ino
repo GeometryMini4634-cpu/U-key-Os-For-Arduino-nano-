@@ -16,13 +16,11 @@ int sleepTime = 15;
 int hiGD = 0, hiSnake = 0; 
 float vccCache = 5.0;
 
-// Глобалы игр
 float pY = 40, v = 0;
 int oX = 128, score = 0, gdMode = 0, oGapY = 32;
-int8_t snX[25], snY[25]; // Массивы тела змейки
+int8_t snX[25], snY[25];
 int8_t snLen = 3, snDir = 1, fX = 40, fY = 40;
 
-// --- 1. СИСТЕМНЫЕ ФУНКЦИИ ---
 
 float getVCC() {
   long result;
@@ -77,7 +75,6 @@ void exitToMenu() {
   drawMenu();
 }
 
-// --- 2. ИГРЫ ---
 
 void runGD() {
   display.clearDisplay();
@@ -118,8 +115,7 @@ void runSnake() {
   if(digitalRead(B_DOWN)==LOW && snDir!=0) snDir=2;
   if(digitalRead(B_LEFT)==LOW && snDir!=1) snDir=3;
   for(int i=snLen; i>0; i--) { snX[i]=snX[i-1]; snY[i]=snY[i-1]; }
-  
-  // ФИКС ДВИЖЕНИЯ ГОЛОВЫ
+
   if(snDir==0) snY[0]-=4; if(snDir==1) snX[0]+=4; if(snDir==2) snY[0]+=4; if(snDir==3) snX[0]-=4;
   
   if(abs(snX[0]-fX)<4 && abs(snY[0]-fY)<4) { if(snLen<24) snLen++; fX=(random(2,28)*4); fY=(random(4,13)*4); }
@@ -171,3 +167,4 @@ void loop() {
     while(digitalRead(B_OK) == LOW) { if(millis() - t > 800) exitToMenu(); }
   }
 }
+
